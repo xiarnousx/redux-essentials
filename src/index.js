@@ -8,11 +8,15 @@ import './index.css';
 import PostsList from './features/posts/PostsList';
 import CounterApp from './CounterApp';
 import App from './App';
+import SinglePostPage from './features/posts/SinglePostPage';
+import EditPostForm from './features/posts/EditPostForm';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path="/" element={<App />}>
-    <Route path="/counter" element={<CounterApp />} />
-    <Route path="/posts" element={<PostsList />} />
+    <Route exact path="/counter" element={<CounterApp />} />
+    <Route exact path="/posts" element={<PostsList />} />
+    <Route exact path="/posts/:postId" element={<SinglePostPage />} />
+    <Route exact path="/posts/edit/:postId" element={<EditPostForm />} />
   </Route>
 ))
 

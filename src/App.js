@@ -5,10 +5,12 @@ const App = () => {
     return (
         <div>
             <nav>
-                <ul className='navLinks'>
-                    <li><Link to="/counter">Counter</Link></li>
-                    <li><Link to="/posts">Posts</Link></li>
-                </ul>
+                <div className='navContent'>
+                    <div className='navLinks'>
+                        <Link to="/counter">Counter</Link>
+                        <Link to="/posts">Posts</Link>
+                    </div>
+                </div>
             </nav>
             <br />
             <div className='main-content'>
