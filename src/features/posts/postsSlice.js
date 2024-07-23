@@ -15,11 +15,11 @@ const postsSlice = createSlice({
                 state.push(action.payload)
             },
             prepare(title, content, userId) {
-                return { payload: { id: nanoid(), title, content, user: userId, date: new Date().toISOString() } }
+                return { payload: { id: nanoid(), title, content, user: userId, date: new Date().toISOString(), reactions: { thumbsUp: 0, hooray: 0, heart: 0, rocket: 0, eyes: 0 } } }
             }
         },
         postUpdated(state, action) {
-            return state.map((post) => post.id === action.payload.id ? action.payload : post)
+            return state.map((post) => post.id === action.payload.id ? { ...post, ...(action.payload) } : post)
         },
         reactionAdded(state, action) {
             const { postId, reaction } = action.payload
