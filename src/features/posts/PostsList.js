@@ -11,10 +11,11 @@ import {
   selectPostIds,
   selectPostById,
 } from "./postsSlice";
+import { useGetPostsQuery } from "../api/apiSlice";
+
 import Spinner from "../../components/Spinner";
 
-const PostExcerpt = ({ postId }) => {
-  const post = useSelector((state) => selectPostById(state, postId));
+const PostExcerpt = ({ post }) => {
   return (
     <article className="post-excerpt">
       <h3>{post.title}</h3>
@@ -33,25 +34,20 @@ const PostExcerpt = ({ postId }) => {
 };
 
 const PostsList = () => {
-  const dispatch = useDispatch();
-  const orderedPostIds = useSelector(selectPostIds);
-  const postStatus = useSelector((state) => state.posts.status);
-  const error = useSelector((state) => state.posts.error);
-
-  useEffect(() => {
-    if (postStatus === "idle") {
-      dispatch(fetchPosts());
-    }
-  }, [postStatus, dispatch]);
+  const {
+    data: posts,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetPostsQuery();
 
   let content;
-  if (postStatus === "loading") {
+  if (isLoading) {
     content = <Spinner text="loading..." />;
-  } else if (postStatus === "succeeded") {
-    content = orderedPostIds.map((postId) => (
-      <PostExcerpt key={postId} postId={postId} />
-    ));
-  } else if (postStatus === "failed") {
+  } else if (isSuccess) {
+    content = posts.map((post) => <PostExcerpt key={post.id} post={post} />);
+  } else if (isError) {
     content = <div>{error}</div>;
   }
   return (
