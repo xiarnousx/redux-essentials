@@ -4,11 +4,12 @@ import { useSelector } from 'react-redux';
 import PostAuthor from '../users/PostAuthor';
 import TimeAgo from './TimeAgo';
 import ReactionButtons from './ReactionButton';
+import { selectPostById } from './postsSlice';
 
 const SinglePostPage = () => {
     const { postId } = useParams();
 
-    const post = useSelector(state => state.posts.find(post => post.id === postId));
+    const post = useSelector(state => selectPostById(state, postId));
 
     if (!post) {
         return (
