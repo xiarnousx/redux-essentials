@@ -14,6 +14,9 @@ import CounterApp from "./CounterApp";
 import App from "./App";
 import SinglePostPage from "./features/posts/SinglePostPage";
 import EditPostForm from "./features/posts/EditPostForm";
+import UsersList from "./features/users/UsersList";
+import UserPage from "./features/users/UserPage";
+import NotificationsList from "./features/notifications/NotificationsList";
 
 import { store } from "./app/store";
 import { fetchUsers } from "./features/users/usersSlice";
@@ -27,6 +30,9 @@ const router = createBrowserRouter(
       <Route exact path="/posts" element={<PostsList />} />
       <Route exact path="/posts/:postId" element={<SinglePostPage />} />
       <Route exact path="/posts/edit/:postId" element={<EditPostForm />} />
+      <Route exact path="/users" element={<UsersList />} />
+      <Route exact path="/users/:userId" element={<UserPage />} />
+      <Route exact path="/notifications" element={<NotificationsList />} />
     </Route>
   )
 );
