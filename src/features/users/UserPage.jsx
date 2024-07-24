@@ -6,7 +6,7 @@ import { selectAllPosts, selectPostsByUser } from "../posts/postsSlice";
 
 const UserPage = () => {
   const { userId } = useParams();
-  const user = useSelector(selectUserById(userId));
+  const user = useSelector((state) => selectUserById(state, userId));
 
   const postsForUser = useSelector((state) => selectPostsByUser(state, userId));
 
