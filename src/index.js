@@ -17,9 +17,9 @@ import EditPostForm from "./features/posts/EditPostForm";
 import UsersList from "./features/users/UsersList";
 import UserPage from "./features/users/UserPage";
 import NotificationsList from "./features/notifications/NotificationsList";
+import { extendedApiSlice } from "./features/users/usersSlice";
 
 import { store } from "./app/store";
-import { fetchUsers } from "./features/users/usersSlice";
 
 import { worker } from "./api/server";
 
@@ -42,7 +42,7 @@ const root = createRoot(container);
 
 async function start() {
   await worker.start({ onUnhandledRequest: "bypass" });
-  store.dispatch(fetchUsers());
+  store.dispatch(extendedApiSlice.endpoints.getUsers.initiate());
   root.render(
     <React.StrictMode>
       <Provider store={store}>

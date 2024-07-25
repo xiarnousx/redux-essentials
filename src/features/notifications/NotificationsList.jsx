@@ -3,16 +3,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import classnames from "classnames";
 
-import { selectAllUsers } from "../users/usersSlice";
 import {
-  selectAllNotifications,
+  useGetNotificationsQuery,
   allNotificationsRead,
+  selectMetadataEntities,
 } from "./notificationsSlice";
+import { selectAllUsers } from "../users/usersSlice";
 
 const NotificationsList = () => {
   const dispatch = useDispatch();
-  const notifications = useSelector(selectAllNotifications);
-  const users = useSelector(selectAllUsers);
+  const { data: notifications = [] } = useGetNotificationsQuery();
+  const notificationsMetadata = useSelector(selectMetadataEntities);
+  const users = useSelector((state) => selectAllUsers(state));
 
   useLayoutEffect(() => {
     dispatch(allNotificationsRead());
@@ -25,8 +27,10 @@ const NotificationsList = () => {
       name: "Unknown User",
     };
 
+    const metadata = notificationsMetadata[notification.id];
+
     const notificationClassname = classnames("notification", {
-      new: notification.isNew,
+      new: metadata.isNew,
     });
 
     return (

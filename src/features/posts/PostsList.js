@@ -53,7 +53,7 @@ const PostsList = () => {
       <PostExcerpt key={post.id} post={post} />
     ));
     const containerClassname = classnames("post-container", {
-      disabled: isFetching,
+      disabled: isLoading,
     });
     content = <div className={containerClassname}>{renderedPosts}</div>;
   } else if (isError) {
