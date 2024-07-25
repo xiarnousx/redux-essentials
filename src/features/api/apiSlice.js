@@ -9,14 +9,28 @@ export const apiSlice = createApi({
     baseUrl: "/fakeApi",
     headers: { "Content-Type": "application/json" },
   }),
+  tagTypes: ["Post", "User"],
   // The endpoints represent operations and requests for this server
   endpoints: (builder) => ({
     getPosts: builder.query({
       // The URL for the request is '/fakeApi/posts'
       query: () => "/posts",
+      providesTags: ["Post"],
+    }),
+    getPost: builder.query({
+      query: (postId) => `/posts/${postId}`,
+    }),
+    addNewPost: builder.mutation({
+      query: (initialPost) => ({
+        url: "/posts",
+        method: "POST",
+        body: initialPost,
+      }),
+      invalidatesTags: ["Post"],
     }),
   }),
 });
 
 // Export the aut-generated hook for the `getPosts` query endpoint
-export const { useGetPostsQuery } = apiSlice;
+export const { useGetPostsQuery, useGetPostQuery, useAddNewPostMutation } =
+  apiSlice;
